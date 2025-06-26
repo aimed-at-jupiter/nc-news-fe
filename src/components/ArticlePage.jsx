@@ -15,7 +15,6 @@ function ArticlePage() {
 
     getArticles(id)
       .then((body) => {
-        console.log(body);
         const { article } = body;
         setArticleData(article);
 

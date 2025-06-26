@@ -1,6 +1,6 @@
 import { getComments } from "./getComments";
 import { useEffect, useState } from "react";
-import { formatDateUTC } from "../utils/formatDate";
+import { CommentCard } from "./CommentCard";
 
 function CommentsSection({ article_id }) {
   const [loading, setLoading] = useState(false);
@@ -27,17 +27,7 @@ function CommentsSection({ article_id }) {
     <section>
       <ul>
         {commentsData.map((comment) => {
-          return (
-            <li key={comment.comment_id}>
-              <p>
-                <strong>{comment.author}</strong>: {comment.body}
-              </p>
-              <p>
-                <em>{formatDateUTC(comment.created_at)}</em> | {comment.votes}{" "}
-                votes
-              </p>
-            </li>
-          );
+          return <CommentCard key={comment.comment_id} comment={comment} />;
         })}
       </ul>
     </section>
