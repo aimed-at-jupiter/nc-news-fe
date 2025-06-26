@@ -4,17 +4,16 @@ import ArticleCard from "./ArticleCard";
 
 function ArticlesList() {
   const [loading, setLoading] = useState(false);
-  const [articleData, setArticleData] = useState([]);
+  const [allArticlesData, setAllArticlesData] = useState([]);
 
   useEffect(() => {
-    console.log("effect fired");
     setLoading(true);
 
     getArticles()
       .then((body) => {
         const { articles } = body;
         setLoading(false);
-        setArticleData(articles);
+        setAllArticlesData(articles);
       })
       .catch((err) => {
         console.log(err, "<<< error from getArticles");
@@ -25,7 +24,7 @@ function ArticlesList() {
     <p>Loading...</p>
   ) : (
     <div>
-      {articleData.map((article) => {
+      {allArticlesData.map((article) => {
         return <ArticleCard key={article.article_id} article={article} />;
       })}
     </div>
