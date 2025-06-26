@@ -12,8 +12,8 @@ function ArticlesList() {
     getArticles()
       .then((body) => {
         const { articles } = body;
-        setLoading(false);
         setAllArticlesData(articles);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err, "<<< error from getArticles");

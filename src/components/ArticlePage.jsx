@@ -2,10 +2,12 @@ import { getArticles } from "./getArticles";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { formatDateUTC } from "../utils/formatDate";
+import CommentsSection from "./CommentsSection";
 
 function ArticlePage() {
   const [loading, setLoading] = useState(false);
   const [articleData, setArticleData] = useState({});
+  const [showComments, setShowComments] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,6 +26,10 @@ function ArticlePage() {
       });
   }, [id]);
 
+  const handleShowComments = () => {
+    setShowComments((prev) => !prev);
+  };
+
   return loading ? (
     <p>Loading...</p>
   ) : (
@@ -34,10 +40,19 @@ function ArticlePage() {
         <p>{articleData.author}</p>
         <p>{articleData.body}</p>
         <p>{articleData.votes} votes</p>
-        <p>{articleData.comment_count} comments</p>
         <p>{articleData.topic}</p>
         <p>{formatDateUTC(articleData.created_at)}</p>
+        <p onClick={handleShowComments}>
+          {showComments
+            ? "hide comments"
+            : `show ${articleData.comment_count} comments`}
+        </p>
       </section>
+      {showComments && (
+        <div className="comments-wrapper">
+          <CommentsSection article_id={id} />
+        </div>
+      )}
     </div>
   );
 }
